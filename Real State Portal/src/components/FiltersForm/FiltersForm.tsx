@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetPropertiesQuery } from "../../services/properties";
+
 
 import { Formik, Form } from "formik";
 import filterSchema from "./filterSchema";
@@ -93,12 +93,11 @@ const FiltersForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { value } = useSelector(filterSelector);
-  const { data, error, isLoading } = useGetPropertiesQuery();
+
   useEffect(() => {
     console.log(paramsString.params);
     dispatch(setSearch(URLparams.get("province")));
-    // dispatch(fetchProperties(paramsString.params));
-    dispatch(fetchProperties(data));
+    dispatch(fetchProperties(paramsString.params));
   }, [paramsString.params]);
 
   const handleSaveFiltersString = (values) => {
