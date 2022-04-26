@@ -93,13 +93,17 @@ const FiltersForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { value } = useSelector(filterSelector);
-  const { data, error, isLoading } = useGetPropertiesQuery();
+
+  console.log(paramsString.params);
+  const valueSplit = paramsString.params.slice(1);
+  console.log(valueSplit);
+  const { data, error, isLoading, isFetching, isSuccess } =
+    useGetPropertiesQuery(valueSplit);
+  console.log(data);
   useEffect(() => {
-    console.log(paramsString.params);
     dispatch(setSearch(URLparams.get("province")));
-    // dispatch(fetchProperties(paramsString.params));
-    dispatch(fetchProperties(data));
-  }, [paramsString.params]);
+    dispatch(apiFilter(data, error, isLoading, isFetching, isSuccess));
+  }, [data]);
 
   const handleSaveFiltersString = (values) => {
     let string = `&province=${value}`;
